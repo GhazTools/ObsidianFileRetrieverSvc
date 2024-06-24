@@ -11,22 +11,27 @@ Edit Log:
 # STANDARD LIBRARY IMPORTS
 # from logging import CRITICAL, DEBUG, ERROR, INFO, NOTSET, WARNING, Formatter, Logger
 # from logging.handlers import TimedRotatingFileHandler
+from pathlib import Path
 
 # THIRD PARTY LIBRARY IMPORTS
 from sanic import Sanic
+from dotenv import load_dotenv
 
 # from sanic.log import LOGGING_CONFIG_DEFAULTS
 
 # LOCAL LIBRARY IMPORTS
 from tools.middleware import Middleware
 from tools.tasks import task_reload_vault
-from routes.blueprints import BLUEPRINTS
 from tools.vault import Vault
+from routes.blueprints import BLUEPRINTS
 
 
-class App:
+class AppSetup:
     def __init__(self) -> None:
+        self.__load_dotenv()
         self._app = Sanic("ObsidianDocumentRetrieverSvc")
+
+        # Register objects
         self._register_middleware()
         self._register_blueprints()
         self._register_globals()
@@ -48,6 +53,18 @@ class App:
     # PUBLIC METHODS END HERE
 
     # PRIVATE METHODS START HERE
+
+    def __load_dotenv(self) -> None:
+        root_path = Path(__file__).resolve().parents[2]
+
+        # Alternative way to get root path
+
+        # file_path = abspath(file)
+        # file_dir = dirname(file_path)
+        # root_path = dirname(dirname(file_dir))
+        # load_dotenv(dotenv_path=root_path)
+
+        load_dotenv(dotenv_path=root_path)
 
     def _register_middleware(self) -> None:
         self.app.register_middleware(Middleware.request_middleware, "request")

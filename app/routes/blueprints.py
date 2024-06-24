@@ -14,17 +14,18 @@ from typing import List
 # THIRD PARTY LIBRARY IMPORTS
 from sanic import Blueprint
 from sanic.request import Request
-from sanic import response
+from sanic.response import text, HTTPResponse
 
 # LOCAL LIBRARY IMPORTS
+from routes.obsidian_routes import OBSIDIAN_ROUTES_BLUEPRINT
 
 
 ENTRY_POINT_BLUEPRINT = Blueprint("entry_point_blueprint", url_prefix="/")
 
 
 @ENTRY_POINT_BLUEPRINT.get("/")
-async def entry_point(request: Request):
-    return response.text("App is currently running.")
+async def entry_point(request: Request) -> HTTPResponse:
+    return text("App is currently running.")
 
 
-BLUEPRINTS: List[Blueprint] = [ENTRY_POINT_BLUEPRINT]
+BLUEPRINTS: List[Blueprint] = [ENTRY_POINT_BLUEPRINT, OBSIDIAN_ROUTES_BLUEPRINT]

@@ -13,10 +13,9 @@ Edit Log:
 # THIRD PARTY LIBRARY IMPORTS
 
 # LOCAL LIBRARY IMPORTS
-from tools.app_setup import App
+from tools.app_setup import AppSetup
 
-app: App = App()
-
+APP_SETUP: AppSetup = AppSetup()
 
 if __name__ == "__main__":
-    app.run()
+    APP_SETUP.run()
