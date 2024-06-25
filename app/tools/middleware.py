@@ -47,7 +47,7 @@ class Middleware:
                 return text("Unsupported endpoint.")
             except ValueError as e:
                 print("Invalid token", e)
-                return text("Invalid endpoint.")
+                return text("Unsupported endpoint.")
 
         print(request, request.path)
         return None
