@@ -47,7 +47,7 @@ class Vault:
         markdown_files: Dict[str, ObsidianMarkdownFile] = self._vault.markdown_files
 
         if not file_name in markdown_files:
-            raise KeyError("File was not found in obsidian vault")
+            raise KeyError(f"File was not found in obsidian vault ${file_name}")
 
         markdown_file: ObsidianMarkdownFile = markdown_files[file_name]
         contents: str = ""
