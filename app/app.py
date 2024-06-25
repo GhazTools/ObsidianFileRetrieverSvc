@@ -16,6 +16,7 @@ Edit Log:
 from tools.app_setup import AppSetup
 
 APP_SETUP: AppSetup = AppSetup()
+app = APP_SETUP.app
 
 if __name__ == "__main__":
-    APP_SETUP.run()
+    app.run(host="0.0.0.0", port=8000)

@@ -48,10 +48,6 @@ class AppSetup:
     # PROPERTIES END HERE
 
     # PUBLIC METHODS START HERE
-
-    def run(self) -> None:
-        self.app.run(host="0.0.0.0", port=8000)
-
     # PUBLIC METHODS END HERE
 
     # PRIVATE METHODS START HERE
