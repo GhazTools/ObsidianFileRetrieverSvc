@@ -12,10 +12,12 @@ Edit Log:
 # from logging import CRITICAL, DEBUG, ERROR, INFO, NOTSET, WARNING, Formatter, Logger
 # from logging.handlers import TimedRotatingFileHandler
 from pathlib import Path
+from os import getenv
 
 # THIRD PARTY LIBRARY IMPORTS
 from sanic import Sanic
 from dotenv import load_dotenv
+from token_granter_wrapper import token_granter_bindings
 
 # from sanic.log import LOGGING_CONFIG_DEFAULTS
 
@@ -32,9 +34,9 @@ class AppSetup:
         self._app = Sanic("ObsidianDocumentRetrieverSvc")
 
         # Register objects
+        self._register_globals()
         self._register_middleware()
         self._register_blueprints()
-        self._register_globals()
         self._register_tasks()
 
     # PROPERTIES START HERE
@@ -56,6 +58,7 @@ class AppSetup:
 
     def __load_dotenv(self) -> None:
         root_path = Path(__file__).resolve().parents[2]
+        env_path = root_path / ".env"
 
         # Alternative way to get root path
 
@@ -64,7 +67,7 @@ class AppSetup:
         # root_path = dirname(dirname(file_dir))
         # load_dotenv(dotenv_path=root_path)
 
-        load_dotenv(dotenv_path=root_path)
+        load_dotenv(dotenv_path=env_path)
 
     def _register_middleware(self) -> None:
         self.app.register_middleware(Middleware.request_middleware, "request")
@@ -76,6 +79,9 @@ class AppSetup:
 
     def _register_globals(self) -> None:
         self.app.config["VAULT"] = Vault()
+        self.app.config["TOKEN_GRANTER"] = token_granter_bindings.TokenGranter(
+            getenv("TOKEN_GRANTER_URL")
+        )
 
     def _register_tasks(self) -> None:
         self.app.add_task(task_reload_vault(self.app))
