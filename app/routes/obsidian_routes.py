@@ -45,7 +45,7 @@ def get_file_contents_detailed(request: Request) -> HTTPResponse:
     return json({"file_contents": vault.get_file_contents_by_name_detailed(file_name)})
 
 
-@OBSIDIAN_ROUTES_BLUEPRINT.get("/getFolderContents")
+@OBSIDIAN_ROUTES_BLUEPRINT.post("/getFolderContents")
 def get_folder_contents(request: Request) -> HTTPResponse:
     vault: Vault = request.app.config["VAULT"]
     folder_name = request.json.get("folderName")
