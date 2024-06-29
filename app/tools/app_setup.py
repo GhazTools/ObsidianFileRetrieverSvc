@@ -62,10 +62,7 @@ class AppSetup:
         # file_dir = dirname(file_path)
         # root_path = dirname(dirname(file_dir))
         # load_dotenv(dotenv_path=root_path)
-        print(getenv("DATA_DIRECTORY_PATH"))
         load_dotenv(dotenv_path=env_path)
-        print(getenv("DATA_DIRECTORY_PATH"))
-        print(env_path)
 
     def _register_middleware(self) -> None:
         self.app.register_middleware(Middleware.request_middleware, "request")

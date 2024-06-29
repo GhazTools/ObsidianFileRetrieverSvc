@@ -27,7 +27,6 @@ class Middleware:
         logger.info("request received %s", request.path)
 
         if request.method == "POST":
-            print("REAHCED HERE")
             token_granter = request.app.config["TOKEN_GRANTER"]
             try:
                 # Parse request body into Pydantic model
@@ -48,7 +47,6 @@ class Middleware:
                 print("Invalid token", e)
                 return text("Unsupported endpoint.")
 
-        print(request, request.path)
         return None
 
     @staticmethod
@@ -56,7 +54,6 @@ class Middleware:
         request: Request,
         response: Any,
     ) -> None:
-        print(request, response)
-        print("success")
+        ...
 
     # PRIVATE METHODS HERE
