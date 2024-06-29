@@ -51,3 +51,25 @@ def get_folder_contents(request: Request) -> HTTPResponse:
     folder_name = request.json.get("folderName")
 
     return json(vault.get_folder_contents(folder_name))
+
+
+# @OBSIDIAN_ROUTES_BLUEPRINT.get("/test")
+# async def handle_get_knowledge_graph(request):
+#     # Example of accessing a query parameter, uncomment and adjust as needed
+#     query_param = request.args.get(
+#         "query", None
+#     )  # Returns the first value for 'query' or None if not present
+
+#     # Corrected and complete JSON response
+#     return json({"TEST": "This is a test response", "query": query_param})
+
+
+@OBSIDIAN_ROUTES_BLUEPRINT.get("/test")
+async def handle_get_knowledge_graph(request):
+    # Example of accessing a query parameter, uncomment and adjust as needed
+    query_param = request.args.get(
+        "query", None
+    )  # Returns the first value for 'query' or None if not present
+
+    # Corrected and complete JSON response
+    return json({"TEST": "This is a test response", "query": query_param})

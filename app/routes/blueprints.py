@@ -18,6 +18,7 @@ from sanic.response import text, HTTPResponse
 
 # LOCAL LIBRARY IMPORTS
 from routes.obsidian_routes import OBSIDIAN_ROUTES_BLUEPRINT
+from routes.knowledge_graph_routes import KNOWLEDGE_GRAPH_BLUEPRINT
 
 
 ENTRY_POINT_BLUEPRINT = Blueprint("entry_point_blueprint", url_prefix="/")
@@ -28,4 +29,8 @@ async def entry_point(request: Request) -> HTTPResponse:
     return text("App is currently running.")
 
 
-BLUEPRINTS: List[Blueprint] = [ENTRY_POINT_BLUEPRINT, OBSIDIAN_ROUTES_BLUEPRINT]
+BLUEPRINTS: List[Blueprint] = [
+    ENTRY_POINT_BLUEPRINT,
+    OBSIDIAN_ROUTES_BLUEPRINT,
+    KNOWLEDGE_GRAPH_BLUEPRINT,
+]

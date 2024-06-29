@@ -62,22 +62,24 @@ class AppSetup:
         # file_dir = dirname(file_path)
         # root_path = dirname(dirname(file_dir))
         # load_dotenv(dotenv_path=root_path)
-
+        print(getenv("DATA_DIRECTORY_PATH"))
         load_dotenv(dotenv_path=env_path)
+        print(getenv("DATA_DIRECTORY_PATH"))
+        print(env_path)
 
     def _register_middleware(self) -> None:
         self.app.register_middleware(Middleware.request_middleware, "request")
         self.app.register_middleware(Middleware.response_middleware, "response")
 
     def _register_blueprints(self) -> None:
-        for blueprint in BLUEPRINTS:
-            self.app.blueprint(blueprint)
+        self.app.blueprint(BLUEPRINTS)
 
     def _register_globals(self) -> None:
         self.app.config["VAULT"] = Vault()
         self.app.config["TOKEN_GRANTER"] = token_granter_bindings.TokenGranter(
             getenv("TOKEN_GRANTER_URL")
         )
+        self.app.config["KNOWLEDGE_GRAPH_DATA_PATH"] = getenv("DATA_DIRECTORY_PATH")
 
     def _register_tasks(self) -> None:
         self.app.add_task(task_reload_vault(self.app))

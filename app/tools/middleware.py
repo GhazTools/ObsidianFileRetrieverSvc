@@ -9,7 +9,6 @@ Edit Log:
 """
 
 # STANDARD LIBRARY IMPORTS
-from os import getenv
 from typing import Any
 
 # THIRD PARTY LIBRARY IMPORTS
@@ -17,7 +16,6 @@ from sanic.request import Request
 from sanic.response import text, HTTPResponse
 from sanic.log import logger
 from pydantic import ValidationError
-from token_granter_wrapper import token_granter_bindings
 
 # LOCAL LIBRARY IMPORTS
 from models.model import BaseRequest
@@ -29,6 +27,7 @@ class Middleware:
         logger.info("request received %s", request.path)
 
         if request.method == "POST":
+            print("REAHCED HERE")
             token_granter = request.app.config["TOKEN_GRANTER"]
             try:
                 # Parse request body into Pydantic model
@@ -53,7 +52,10 @@ class Middleware:
         return None
 
     @staticmethod
-    async def response_middleware(request: Request, response: Any) -> None:
+    async def response_middleware(
+        request: Request,
+        response: Any,
+    ) -> None:
         print(request, response)
         print("success")
 

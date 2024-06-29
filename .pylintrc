@@ -44,6 +44,8 @@ suggestion-mode=yes
 # active Python interpreter and may run arbitrary code.
 unsafe-load-any-extension=no
 
+extension-pkg-allow-list=token_granter_wrapper.token_granter_bindings
+
 
 [MESSAGES CONTROL]
 
