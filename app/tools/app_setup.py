@@ -16,6 +16,7 @@ from os import getenv
 
 # THIRD PARTY LIBRARY IMPORTS
 from sanic import Sanic
+from sanic_cors import CORS
 from dotenv import load_dotenv
 from token_granter_wrapper import token_granter_bindings
 
@@ -32,6 +33,7 @@ class AppSetup:
     def __init__(self) -> None:
         self.__load_dotenv()
         self._app = Sanic("ObsidianDocumentRetrieverSvc")
+        CORS(self._app)
 
         # Register objects
         self._register_globals()

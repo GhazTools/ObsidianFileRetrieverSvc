@@ -10,7 +10,7 @@ Edit Log:
 
 # STANDARD LIBRARY IMPORTS
 from os import getenv
-from os.path import join
+from os.path import join, exists
 from typing import cast
 from json import load
 
@@ -26,22 +26,23 @@ KNOWLEDGE_GRAPH_BLUEPRINT = Blueprint(
     "knowledge_graph_blueprint", url_prefix="/knowledgeGraph/"
 )
 CORS(
-    KNOWLEDGE_GRAPH_BLUEPRINT,
-    resources={r"/api/*": {"origins": "*"}},
-    methods=["GET"],
-    allow_headers=["Content-Type", "Authorization"],
-    supports_credentials=True,
+    KNOWLEDGE_GRAPH_BLUEPRINT
 )
 
 
 @KNOWLEDGE_GRAPH_BLUEPRINT.get("/")
 async def handle_get_knowledge_graph(request):
     # Accessing a single query parameter (e.g., 'query')
+    default_vault_name: str = cast(str, getenv("DEFAULT_OBSIDIAN_VAULT"))
+    
     vault_name = request.args.get(
-        "vaultName", cast(str, getenv("DEFAULT_OBSIDIAN_VAULT"))
-    )  # Returns the first value for 'query' or None if not present
+        "vaultName", default_vault_name
+    )  
 
     json_path = join(getenv("DATA_DIRECTORY_PATH"), f"{vault_name}.json")
+    
+    if not exists(json_path):
+        json_path = join(getenv("DATA_DIRECTORY_PATH"), f"{default_vault_name}.json")
 
     vault_data: dict = {}
 
